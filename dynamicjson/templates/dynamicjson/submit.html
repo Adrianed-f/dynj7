@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dynamic JSON Form</title>
+    <style>
+      .container {
+        max-width: 720px;
+        margin: 24px auto;
+        padding: 0 16px;
+        font-family: Arial, sans-serif;
+      }
+      .input-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .form-control {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+      }
+      button {
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #cbd5e1;
+        background: #f8fafc;
+        cursor: pointer;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Форма (динамические поля)</h1>
+      <form method="post" id="dynamic-form">
+        {% csrf_token %}
+        <div id="inputs">
+          <div class="input-row" style="margin-bottom: 12px;">
+            {{ form.name }}
+          </div>
+        </div>
+
+        <button id="add-btn" type="button">Добавить</button>
+        <button type="submit">Отправить</button>
+
+        {% if form.errors %}
+          <div style="margin-top: 12px; color: #b91c1c;">
+            {{ form.errors }}
+          </div>
+        {% endif %}
+      </form>
+    </div>
+
+    <script>
+      $(function () {
+        let count = 0;
+
+        $("#add-btn").on("click", function () {
+          count += 1;
+          const inputName = `name${count}`;
+
+          const $row = $("<div>").addClass("input-row").css("margin-bottom", "12px");
+          const $input = $("<input>")
+            .attr("type", "text")
+            .attr("name", inputName)
+            .addClass("form-control")
+            .attr("placeholder", inputName);
+
+          $row.append($input);
+          $("#inputs").append($row);
+        });
+      });
+    </script>
+  </body>
+</html>
+

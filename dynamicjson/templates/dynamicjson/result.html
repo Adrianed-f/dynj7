@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Result</title>
+    <style>
+      .container {
+        max-width: 720px;
+        margin: 24px auto;
+        padding: 0 16px;
+        font-family: Arial, sans-serif;
+      }
+      .btn {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #cbd5e1;
+        background: #f8fafc;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+      }
+      pre {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 12px;
+        border-radius: 6px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Данные из JSONB</h1>
+      <p>
+        Submission #{{ submission.pk }}.
+        Создано: {{ submission.created_at }}
+      </p>
+
+      <div style="margin: 16px 0;">
+        <a
+          href="{% url 'dynamicjson:submit' %}"
+          class="btn"
+        >
+          Назад к форме
+        </a>
+      </div>
+
+      <h2>Значения инпутов</h2>
+      {% if inputs %}
+        <ul>
+          {% for item in inputs %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Нет значений</p>
+      {% endif %}
+
+      <h2>Данные JSONB</h2>
+      <pre>{{ submission.data }}</pre>
+    </div>
+  </body>
+</html>
+
